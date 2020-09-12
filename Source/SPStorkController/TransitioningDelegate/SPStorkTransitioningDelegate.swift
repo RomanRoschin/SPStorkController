@@ -30,6 +30,8 @@ public final class SPStorkTransitioningDelegate: NSObject, UIViewControllerTrans
     public var indicatorColor: UIColor = UIColor.init(red: 202/255, green: 201/255, blue: 207/255, alpha: 1)
     public var hideIndicatorWhenScroll: Bool = false
     public var indicatorMode: SPStorkArrowMode = .auto
+    public var backgroundColor: UIColor = .black
+    public var presentingViewAlpha: CGFloat = 0.51
     public var customHeight: CGFloat? = nil
     public var translateForDismiss: CGFloat = 200
     public var cornerRadius: CGFloat = 10
@@ -46,6 +48,8 @@ public final class SPStorkTransitioningDelegate: NSObject, UIViewControllerTrans
         controller.indicatorColor = self.indicatorColor
         controller.hideIndicatorWhenScroll = self.hideIndicatorWhenScroll
         controller.indicatorMode = self.indicatorMode
+        controller.backgroundColor = self.backgroundColor
+        controller.presentingViewAlpha = presentingViewAlpha
         controller.customHeight = self.customHeight
         controller.translateForDismiss = self.translateForDismiss
         controller.cornerRadius = self.cornerRadius

@@ -30,6 +30,8 @@ class SPStorkPresentationController: UIPresentationController, UIGestureRecogniz
     var indicatorColor: UIColor = UIColor.init(red: 202/255, green: 201/255, blue: 207/255, alpha: 1)
     var hideIndicatorWhenScroll: Bool = false
     var indicatorMode: SPStorkArrowMode = .auto
+    var backgroundColor: UIColor = .black
+    var presentingViewAlpha: CGFloat = 0.51
     var customHeight: CGFloat? = nil
     var translateForDismiss: CGFloat = 200
     var hapticMoments: [SPStorkHapticMoments] = [.willDismissIfRelease]
@@ -62,7 +64,7 @@ class SPStorkPresentationController: UIPresentationController, UIGestureRecogniz
         return (statusBarHeight < 25) ? 30 : statusBarHeight
     }
     
-    private let alpha: CGFloat =  0.51
+    private var alpha: CGFloat { 1.0 - presentingViewAlpha }
     var cornerRadius: CGFloat = 10
     
     private var scaleForPresentingView: CGFloat {
@@ -153,7 +155,7 @@ class SPStorkPresentationController: UIPresentationController, UIGestureRecogniz
         self.snapshotViewContainer.frame = initialFrame
         self.updateSnapshot()
         self.snapshotView?.layer.cornerRadius = 0
-        self.backgroundView.backgroundColor = UIColor.black
+        self.backgroundView.backgroundColor = self.backgroundColor
         self.backgroundView.translatesAutoresizingMaskIntoConstraints = false
         containerView.insertSubview(self.backgroundView, belowSubview: self.snapshotViewContainer)
         NSLayoutConstraint.activate([
@@ -286,7 +288,7 @@ class SPStorkPresentationController: UIPresentationController, UIGestureRecogniz
             let snapshotRoundedView = UIView()
             snapshotRoundedView.layer.cornerRadius = self.cornerRadius
             snapshotRoundedView.layer.masksToBounds = true
-            snapshotRoundedView.backgroundColor = UIColor.black.withAlphaComponent(self.alpha)
+            snapshotRoundedView.backgroundColor = self.backgroundColor.withAlphaComponent(self.alpha)
             containerView.insertSubview(snapshotRoundedView, aboveSubview: snapshotView)
             snapshotRoundedView.frame = initialFrame
             snapshotRoundedView.transform = initialTransform
@@ -552,7 +554,7 @@ extension SPStorkPresentationController {
             snapshotView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
         self.gradeView.removeFromSuperview()
-        self.gradeView.backgroundColor = UIColor.black
+        self.gradeView.backgroundColor = self.backgroundColor
         self.snapshotView!.addSubview(self.gradeView)
         self.constraints(view: self.gradeView, to: self.snapshotView!)
     }
